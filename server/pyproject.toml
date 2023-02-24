@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "api"
+version = "0.1.0"
+description = ""
+authors = ["mcantillon21 <60069300+mcantillon21@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain = "^0.0.82"
+openai = "^0.26.5"
+nltk = "^3.8.1"
+faiss-cpu = "^1.7.3"
+bs4 = "^0.0.1"
+unstructured = "^0.4.8"
+fastapi = "^0.91.0"
+uvicorn = "^0.20.0"
+python-multipart = "^0.0.5"
+pypdf = "^3.4.0"
+poetry-dotenv-plugin = "^0.1.0"
+pydantic = "^1.10.4"
+tiktoken = "^0.2.0"
+mypy = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

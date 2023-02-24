@@ -2,3 +2,4 @@
 .env
 .next
 node_modules
+__pycache__

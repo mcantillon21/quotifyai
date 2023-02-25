@@ -39,10 +39,6 @@ mount = modal.Mount.from_local_dir("../index", remote_path = "/", condition=filt
 
 app = FastAPI()
 
-origins = [
-    "*",
-]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -79,6 +75,7 @@ def generate_quotes_from_pdf(
     search_term: str, openai_api_key: str, file: UploadFile = File(...)
 ):
     try:
+        print('Got request')
         stream = extract_stream(file)
         # Require OpenAI Key for documents over 50kB
         if stream.getbuffer().nbytes > 50000 and not openai_api_key:

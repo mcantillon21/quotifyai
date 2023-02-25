@@ -5,7 +5,14 @@ import Lottie from 'lottie-react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import { useColorMode, Box, Input, Text, Button, useToast } from '@chakra-ui/react'
+import {
+  useColorMode,
+  Box,
+  Input,
+  Text,
+  Button,
+  useToast,
+} from '@chakra-ui/react'
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import { Typewriter } from 'react-simple-typewriter'
 import { FileInput } from '../components/FileInput'
@@ -88,17 +95,22 @@ export default function Home() {
           maxWidth: '90%',
         },
       })
+      return;
     }
-    else {
+
       setLoading(true)
       setSearchTerm(searchTerm)
+
+      try {
       const formData = new FormData()
+
       const headers = {
         accept: 'application/json',
-        'Access-Control-Allow-Origin': "*",
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Credentials': 'true',
-  
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers'
       }
       formData.append('file', fileRef.current![0], 'file')
       const axiosResponse = await axios.post(
@@ -113,11 +125,18 @@ export default function Home() {
           },
         },
       )
+
       setCompletion(axiosResponse.data.completion)
       setContext(axiosResponse.data.summary)
       console.log(axiosResponse)
       setLoading(false)
-    }
+      }
+    catch (error) {
+      console.log(error)
+                  // "Sorry, we ran into an issue. It's likely we ran out of our OpenAI credits or are being rate limited. Try passing in your own key!"
+      // setLoadingText(undefined);
+      // clearInterval(updateLoading);
+  }
   }
 
   return (
@@ -125,9 +144,15 @@ export default function Home() {
       <GradientCanvas />
       <Head>
         <title>Quotify</title>
-        <meta name="description" content="Find meaningful quotes in books, articles, or anything that can be turned into PDF. " />
+        <meta
+          name="description"
+          content="Find meaningful quotes in books, articles, or anything that can be turned into PDF. "
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💭</text></svg>"/>
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💭</text></svg>"
+        />
       </Head>
       {/* <Box id="gradient-canvas" className="h-screen w-screen m-0" bg={gradient}> */}
       {/* <Box className="p-2">

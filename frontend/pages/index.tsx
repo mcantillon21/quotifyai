@@ -46,6 +46,7 @@ export default function Home() {
   const [isDarkMode, setDarkMode] = useState<boolean>(true)
   const [fileName, setFileName] = useState<string>('')
   const fileRef = useRef<FileList | null>(null)
+  const [errorMessage, setErrorMesage] = useState('');
 
   const toast = useToast()
 
@@ -100,43 +101,46 @@ export default function Home() {
 
       setLoading(true)
       setSearchTerm(searchTerm)
+      setErrorMesage("")
 
       try {
-      const formData = new FormData()
+        const formData = new FormData()
 
-      const headers = {
-        accept: 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers'
-      }
-      formData.append('file', fileRef.current![0], 'file')
-      const axiosResponse = await axios.post(
-        // 'http://127.0.0.1:8000/generate-quotes-from-pdf',
-        'https://mcantillon21--quotify-fastapi-app-dev.modal.run/generate-quotes-from-pdf',
-        formData,
-        {
-          headers: headers,
-          params: {
-            search_term: searchTerm,
-            openai_api_key: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+        const headers = {
+          accept: 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers'
+        }
+        formData.append('file', fileRef.current![0], 'file')
+        const axiosResponse = await axios.post(
+          // 'http://127.0.0.1:8000/generate-quotes-from-pdf',
+          'https://mcantillon21--quotify-fastapi-app-dev.modal.run/generate-quotes-from-pdf',
+          formData,
+          {
+            headers: headers,
+            params: {
+              search_term: searchTerm,
+              openai_api_key: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+            },
           },
-        },
-      )
-
-      setCompletion(axiosResponse.data.completion)
-      setContext(axiosResponse.data.summary)
-      console.log(axiosResponse)
-      setLoading(false)
+        )
+        if (axiosResponse.status != 200) {
+          setErrorMesage("Sorry, we ran into an issue. It's likely we ran out of our OpenAI credits or are being rate limited. Check back soon!")
+        }
+      
+        setCompletion(axiosResponse.data.completion)
+        setContext(axiosResponse.data.summary)
+        console.log(axiosResponse)
+        setLoading(false)
       }
-    catch (error) {
-      console.log(error)
-                  // "Sorry, we ran into an issue. It's likely we ran out of our OpenAI credits or are being rate limited. Try passing in your own key!"
-      // setLoadingText(undefined);
-      // clearInterval(updateLoading);
-  }
+      catch (error) {
+        console.log(error)
+        setLoading(false)
+        setErrorMesage("Sorry, we ran into an issue. It's likely we ran out of our OpenAI credits or are being rate limited. Check back soon!")
+      }
   }
 
   return (
@@ -264,6 +268,11 @@ export default function Home() {
               >
                 Submit
               </Button>
+              {errorMessage && (
+                <div className="text-red-500 text-center font-sans text-md bg-white">
+                    {errorMessage}{" "}
+                </div>
+            )}
               {loading ? (
                 <>
                   <div className="text-center mt-4">

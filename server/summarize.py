@@ -16,15 +16,10 @@ def summarize_context(search_term: str, contexts: list[str], openai_api_key: str
         docs = [Document(page_content=context) for context in contexts]
         # have to do a little weird acrobatics here because summarize cannot take more than one input
         # so have to construct the prompt template string after we interpolate the characters
-        # print("Summarizing context for: ", search_term)
         final_prompt = base_prompt.format(search_term) + "\n{text}\n\nSUMMARY:"
-        # print("Final prompt: ", final_prompt)
         final_prompt_template = PromptTemplate(template = final_prompt, input_variables=["text"])
-        # print("Final prompt template: ", final_prompt_template)
         llm_summarize = load_summarize_chain(llm, chain_type="map_reduce", return_intermediate_steps=True, map_prompt=final_prompt_template, combine_prompt=final_prompt_template)
-        print('SUMMARIZE', llm_summarize)
         global_summary = llm_summarize({"input_documents": docs}, return_only_outputs=True)
-        print('GLOBAL SUMMARY: ', global_summary)
         if (len(global_summary["output_text"]) > 400):
             return global_summary["output_text"]
         else:

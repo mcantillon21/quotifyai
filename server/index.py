@@ -75,7 +75,6 @@ def generate_quotes_from_pdf(
     search_term: str, openai_api_key: str, file: UploadFile = File(...)
 ):
     try:
-        print('Got request')
         stream = extract_stream(file)
         # Require OpenAI Key for documents over 50kB
         if stream.getbuffer().nbytes > 50000 and not openai_api_key:
@@ -85,11 +84,10 @@ def generate_quotes_from_pdf(
             stream, f"Retrieve the most significally relevant quotes in the text about {search_term}", NUM_CHUNKS, openai_api_key=openai_api_key
         )
         # print('PARSED REVELANT CONTEXT: ', relevant_document_context)
-        print('Got relevant context')
         context_summary = summarize_context(search_term, relevant_document_context, openai_api_key=openai_api_key)
-        print('SUMMARIZED CONTEXT: ' + context_summary)
+        # print('SUMMARIZED CONTEXT: ' + context_summary)
         completion = generate_quotes(search_term, context_summary, openai_api_key=openai_api_key)
-        print('COMPLETION   ' + completion)
+        # print('COMPLETION   ' + completion)
         return {"summary": context_summary, "completion": completion}
     except Exception as ex:
         print(ex)

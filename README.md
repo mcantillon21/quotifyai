@@ -1,13 +1,16 @@
 
-# Quotify
+# Quotify 💭
 Generate meaningful quotes from books, articles, or literally anything that can be turned into a PDF. 
 
-Website [here](https://quotifyai.com/). Built by [Molly](https://twitter.com/mollycantillon) :)
+Website [here](https://quotifyai.com/). Built by [Molly](https://twitter.com/mollycantillon). 
 
 ### Background
-Quotify is a AI-powered quote finder analyzing any text-based PDF and extracting the most relavant quotes to substantiate your claim. 
 
-### Implementation
+Quotify is a AI-powered quote finder for any text-based PDF, extracting the most relavant quotes to substantiate your claim. What if we didn't have to scour texts for hours in search of a thesis-supporting quote?
+
+Provided the full length of riveting multi-dimensioned novels, intensive drama telenovella scripts, dense academic journal entries, and everything in between, Quotify finds the most significant parts of the text in relation to your ideated topic. This means you can now find Shakespeare quotes, cited within the text, about free will _and_ environmental activism. 
+
+### Technical Implementation
 Quotify uses the following tools:
 
 -  [PyPDF](https://pypdf2.readthedocs.io/en/3.0.0/) for parsing the uploaded PDF doc into text
@@ -27,9 +30,9 @@ Afterwards, run `make setup` to configure your environment to run our applicatio
 ### Frontend
 The frontend is built using [React](https://reactjs.org/), [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) and [Chakra-UI](https://chakra-ui.com). To run the web app locally, change directories into `frontend` nd run `npm install` to install all dependencies. Then run `npm run dev`. 
 
-## Improvements
-TODO
+## Acknowledgements & Disclaimer
 
-## Acknowledgement & Disclaimer
+I learned a lot from [Amir](https://twitter.com/amirbolous) & [Verumlotus's](https://twitter.com/verumlotus) [SweetSerenade](https://www.sweetserenade.xyz/) while building this.
+
 Please note that this tool is intended as an experimental exploration of quote extraction using advanced AI technology, and should not be relied upon as a replacement for thorough research or analysis in any academic or professional context. While we have taken every effort to ensure accuracy and proper citation of sources, we cannot provide a full guarantee of the correctness of our analyses.
 

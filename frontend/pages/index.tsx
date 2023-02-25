@@ -70,10 +70,7 @@ export default function Home() {
   )
 
   const toggleOpen = () => {
-    // console.log('toggleOpen')
     setIsOpen(!isOpen)
-    console.log(isOpen)
-    console.log(context)
   }
 
   const toggleDarkMode = (checked: boolean) => {
@@ -133,7 +130,7 @@ export default function Home() {
       
         setCompletion(axiosResponse.data.completion)
         setContext(axiosResponse.data.summary)
-        console.log(axiosResponse)
+        // console.log(axiosResponse)
         setLoading(false)
       }
       catch (error) {

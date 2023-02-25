@@ -3,7 +3,9 @@
   flex-direction: column;
   object-fit: fill;
   /* justify-content: space-between; */
-  padding: 12rem;
+  padding: 5%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .wrapper {
@@ -36,7 +38,8 @@
 } */
 
 .browserpanel {
-  width: 30em;
+  width: 80%;
+  max-width: 30em;
   background: radial-gradient(
       63.94% 63.94% at 50% 0%,
       rgba(255, 255, 255, 0.12) 0%,

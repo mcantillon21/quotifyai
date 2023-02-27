@@ -114,7 +114,7 @@ export default function Home() {
         formData.append('file', fileRef.current![0], 'file')
         const axiosResponse = await axios.post(
           // 'http://127.0.0.1:8000/generate-quotes-from-pdf',
-          'https://mcantillon21--quotify-fastapi-app-dev.modal.run/generate-quotes-from-pdf',
+          'https://mcantillon21--quotify-fastapi-app.modal.run/generate-quotes-from-pdf',
           formData,
           {
             headers: headers,
